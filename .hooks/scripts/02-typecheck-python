@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if ! [ -x "$(command -v mypy)" ]; then
+  >&2 echo 'mypy is not installed.'
+  exit 1
+fi
+
+mypy $AUTOHOOK_STAGED_FILES
+exit $?

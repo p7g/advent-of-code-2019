@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if ! [ -x "$(command -v black)" ]; then
+  >&2 echo 'black is not installed'
+  exit 1
+fi
+
+if 2>/dev/null black --check $AUTOHOOK_STAGED_FILES; then
+  black $AUTOHOOK_STAGED_FILES
+  exit 1
+fi
