@@ -21,7 +21,7 @@ def main():
     return total
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_cases = [
         (14, 2),
         (1969, 966),
@@ -29,7 +29,8 @@ if __name__ == '__main__':
     ]
 
     for input, expected in test_cases:
-        assert account_for_fuel_mass(calculate_fuel(input)) == expected, \
-            f'Expected mass of {input} to require {expected} fuel'
+        assert (
+            account_for_fuel_mass(calculate_fuel(input)) == expected
+        ), f"Expected mass of {input} to require {expected} fuel"
 
     print(main())
