@@ -8,7 +8,7 @@ from part1 import evaluate, get_input
 def try_permutation(values: Tuple[int, ...]):
     i, j = values
 
-    code = get_input()
+    code = code_input.copy()
     code[1] = i
     code[2] = j
 
@@ -30,6 +30,9 @@ def main():
         return result[0]
 
     raise ValueError(result)
+
+
+code_input = get_input()
 
 
 if __name__ == "__main__":
