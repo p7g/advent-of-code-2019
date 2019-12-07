@@ -37,7 +37,6 @@ fn main() -> std::io::Result<()> {
 
     for name in reverse_orbits.keys() {
         let name = name.to_string();
-        println!("{}: {:?}", name, reverse_orbits[&name]);
         dist.insert(name.clone(), i64::max_value() - 1);
         prev.insert(name.clone(), None);
         q.insert(name);
@@ -54,7 +53,6 @@ fn main() -> std::io::Result<()> {
             for v in vs {
                 let alt = dist[&u] + 1;
                 if alt < dist[v] {
-                    // println!("{} is less than {}", alt, dist[v]);
                     let v = v.to_string();
                     dist.insert(v.clone(), alt);
                     prev.insert(v, Some(u.clone()));
