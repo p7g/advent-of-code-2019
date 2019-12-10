@@ -73,7 +73,6 @@ pub(crate) struct VM {
     code: Vec<i64>,
     ip: usize,
     len: usize,
-    last_output: Option<i64>,
     relative_base: i64,
     extra_memory: HashMap<usize, i64>,
 }
@@ -84,7 +83,6 @@ impl VM {
             len: code.len(),
             code,
             ip: 0,
-            last_output: None,
             relative_base: 0,
             extra_memory: HashMap::new(),
         }
@@ -152,19 +150,19 @@ impl VM {
                 }};
             }
 
-            let instruction = unsafe { std::mem::transmute((raw_instruction % 100) as u8) };
-
             macro_rules! binop {
-                ($op:expr, $name:expr) => {{
+                ($op:expr) => {{
                     let left = param!(0);
                     let right = param!(1);
                     param_dest!(2, $op(left, right));
                 }};
             }
 
+            let instruction = unsafe { std::mem::transmute((raw_instruction % 100) as u8) };
+
             match instruction {
-                OpCode::Add => binop!(i64::add, "add"),
-                OpCode::Mul => binop!(i64::mul, "mul"),
+                OpCode::Add => binop!(i64::add),
+                OpCode::Mul => binop!(i64::mul),
 
                 OpCode::Input => {
                     if let Some(val) = input.take() {
@@ -177,7 +175,6 @@ impl VM {
                 OpCode::Output => {
                     let val = param!(0);
                     self.ip += instruction.effect();
-                    self.last_output = Some(val);
                     return Ok(ExecutionStatus::Output(val));
                 }
 
@@ -201,8 +198,8 @@ impl VM {
                     }
                 }
 
-                OpCode::Lt => binop!(|a, b| (a < b) as i64, "lt"),
-                OpCode::Eq => binop!(|a, b| (a == b) as i64, "eq"),
+                OpCode::Lt => binop!(|a, b| (a < b) as i64),
+                OpCode::Eq => binop!(|a, b| (a == b) as i64),
 
                 OpCode::AdjustRelativeBase => {
                     let adjustment = param!(0);
