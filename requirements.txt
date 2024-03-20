@@ -4,14 +4,23 @@
 #
 #    pip-compile
 #
-appdirs==1.4.3            # via black
-attrs==19.3.0             # via black
-black==19.10b0
-click==7.0                # via black
-mypy-extensions==0.4.3    # via mypy
+black==24.3.0
+    # via -r requirements.in
+click==8.1.7
+    # via black
 mypy==0.740
-pathspec==0.6.0           # via black
-regex==2019.11.1          # via black
-toml==0.10.0              # via black
-typed-ast==1.4.0          # via black, mypy
-typing-extensions==3.7.4.1  # via mypy
+    # via -r requirements.in
+mypy-extensions==0.4.3
+    # via
+    #   black
+    #   mypy
+packaging==24.0
+    # via black
+pathspec==0.12.1
+    # via black
+platformdirs==4.2.0
+    # via black
+typed-ast==1.4.0
+    # via mypy
+typing-extensions==3.7.4.1
+    # via mypy
